@@ -101,7 +101,7 @@ export default function Home() {
 
         {/* steps */}
         <ol
-          className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0"
+          className="my-8 space-y-4 pt-8 md:flex md:gap-5 md:space-y-0 "
           dir="rtl"
         >
           <li className="md:flex-1">
