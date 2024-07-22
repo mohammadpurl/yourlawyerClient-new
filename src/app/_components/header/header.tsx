@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { TopNavigation } from "./top-navigation";
-import HeaderUserSection from "./header-user-section";
+// import HeaderUserSection from "./header-user-section";
 export const Header: React.FC = async () => {
-
   return (
     <header className="border-b dark:border-base-content dark:border-opacity-5">
       <div className="container flex items-center justify-between">
@@ -13,9 +12,7 @@ export const Header: React.FC = async () => {
           alt="کلاسبن"
         />
         <TopNavigation />
-        <div className="mr-auto">
-          <HeaderUserSection/>
-        </div>
+        <div className="mr-auto">{/* <HeaderUserSection/> */}</div>
       </div>
     </header>
   );
