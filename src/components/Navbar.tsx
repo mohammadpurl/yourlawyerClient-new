@@ -1,6 +1,6 @@
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   LoginLink,
   RegisterLink,
@@ -36,22 +36,20 @@ const Navbar = async () => {
                 >
                   Pricing
                 </Link> */}
-                <LoginLink
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
+                <Link
+                  href="/signin"
+                  className="bg-inherit text-black  hover:bg-accent/90"
                 >
                   ورود
-                </LoginLink>
-                <RegisterLink
+                </Link>
+                {/* <Button
                   className={buttonVariants({
                     size: "sm",
                   })}
                 >
                   {" "}
                   شروع کنید <ArrowLeft className="ml-1.5 h-5 w-5" />
-                </RegisterLink>
+                </Button> */}
               </>
             ) : (
               <>
