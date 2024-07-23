@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import { Size } from "../types/size.type";
 import { AvatarProps } from "./avatar.types";
-import { IconUserProfile } from "@/app/_components/icons/icons";
+// import { IconUserProfile } from "@/app/_components/icons/icons";
 
 const sizeClasses: Record<Size, number> = {
   tiny: 40,
@@ -36,12 +36,11 @@ export const Avatar: React.FC<AvatarProps> = ({
           height={sizeClasses[size]}
           alt={alt}
         />
-      ) : (
-        <IconUserProfile
-          width={sizeClasses[size] / 2}
-          height={sizeClasses[size] / 2}
-        />
-      )}
+      ) : // <IconUserProfile
+      //   width={sizeClasses[size] / 2}
+      //   height={sizeClasses[size] / 2}
+      // />
+      null}
     </div>
   );
 };
