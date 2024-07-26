@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/app/_components/button/button";
-
 import { SignIn } from "../types/signin.types";
 import { useForm } from "react-hook-form";
 import { TextInput } from "@/app/_components/form-input";
@@ -67,10 +66,9 @@ const SignInForm = () => {
         <TextInput<SignIn>
           register={register}
           name={"mobile"}
-          className="h-12 p-4 rounded-sm  box-border   border-double border-black"
+          className="h-12 p-4 rounded-sm  box-border  border-solid  border-border border-black"
           errors={errors}
         />
-
         <Button
           type="submit"
           variant="primary"

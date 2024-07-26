@@ -14,7 +14,7 @@ import { Problem } from "@/types/http-errors.interface";
 import { signIn, signOut } from "@/auth";
 
 export async function signInAction(
-  formState: OperationResult<string> | null,
+  formState: OperationResult<any> | null,
   formData: FormData
 ) {
   const mobile = formData.get("mobile") as string;
@@ -29,7 +29,7 @@ export async function signInAction(
   // } else {
   return serverActionWrapper(
     async () =>
-      await createData<SignIn, string>("/signin", {
+      await createData<SignIn, any>("/auth/get-otp", {
         mobile,
       })
   );
@@ -42,7 +42,7 @@ export async function sendAuthCode(
 ) {
   return serverActionWrapper(
     async () =>
-      await createData<SendAuthCode, string>("/send-auth-code", {
+      await createData<SendAuthCode, string>("/auth/get-otp", {
         mobile,
       })
   );
@@ -54,7 +54,7 @@ export async function verify(
 ) {
   try {
     await signIn("credentials", {
-      username: model.username,
+      mobile: model.mobile,
       code: model.code,
       redirect: false,
     });
@@ -62,7 +62,7 @@ export async function verify(
       isSuccess: true,
     } satisfies OperationResult<void>;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     //    throw new Error('');
   }
 }

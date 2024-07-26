@@ -1,8 +1,8 @@
 export type VerifyUserModel = {
-    username: string;
-    code: string;
-}
+  mobile: string;
+  code: string;
+};
 
 export type SendAuthCode = {
-    mobile: string;
-}
+  mobile: string;
+};

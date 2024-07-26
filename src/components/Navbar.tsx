@@ -9,6 +9,7 @@ import {
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import UserAccountNav from "./UserAccountNav";
 import MobileNav from "./MobileNav";
+import HeadeUserSession from "./Heade-user-session";
 
 const Navbar = async () => {
   const { getUser } = getKindeServerSession();
@@ -36,12 +37,13 @@ const Navbar = async () => {
                 >
                   Pricing
                 </Link> */}
-                <Link
+                {/* <Link
                   href="/signin"
                   className="bg-inherit text-black  hover:bg-accent/90"
                 >
                   ورود
-                </Link>
+                </Link> */}
+                <HeadeUserSession />
                 {/* <Button
                   className={buttonVariants({
                     size: "sm",

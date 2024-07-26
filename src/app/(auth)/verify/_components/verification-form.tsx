@@ -2,7 +2,7 @@
 
 import AuthCode from "@/app/_components/auth-code/auth-code";
 import { AuthCodeRef } from "@/app/_components/auth-code/auth-code.types";
-import { Button } from "@/app/_components/button/button";
+// import { Button } from "@/app/_components/button/button";
 import { Timer } from "@/app/_components/timer/timer";
 import { TimerRef } from "@/app/_components/timer/timer.types";
 import Link from "next/link";
@@ -18,10 +18,11 @@ import { useFormState } from "react-dom";
 import { sendAuthCode, verify } from "@/actions/auth";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const getTwoMinutesFromNow = () => {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 10);
+  time.setSeconds(time.getSeconds() + 120);
   return time;
 };
 
@@ -63,7 +64,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
     } else if (verifyState?.isSuccess) {
       const fetchSession = async () => await getSession();
       fetchSession();
-      router.push("/student/courses");
+      router.push("/dashboard");
     }
   });
 
@@ -87,11 +88,11 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
   }, [sendAuthCodeState, showNotification]);
 
   const onSubmit = (data: VerifyUserModel) => {
-    data.username = username;
+    data.mobile = username;
 
     startTransition(async () => {
       verifyAction({
-        username: data.username,
+        mobile: data.mobile,
         code: data.code,
       });
     });
@@ -110,7 +111,9 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
   return (
     <>
       <h5 className="text-2xl">کد تایید</h5>
-      <p className="mt-2">دنیای شگفت انگیز برنامه نویسی در انتظار شماست!</p>
+      <p className="mt-2">
+        وکیل تو دستیار مبتنی بر هوش مصنوعی تو برای تهیه مستندات حقوقی
+      </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-6 mt-10 flex-1"
@@ -143,9 +146,10 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
         </Button>
         <Button
           type="submit"
-          variant="primary"
+          // variant="primary"
           isLoading={verifyPendingState}
           isDisabled={!isValid}
+          className="bg-blue-700"
         >
           تایید و ادامه
         </Button>

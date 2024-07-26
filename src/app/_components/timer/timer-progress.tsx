@@ -34,14 +34,14 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
   }, [progress]);
 
   const classes = classNames(
-    "timer-progress relative flex flex-col items-center",
+    "items-center relative flex flex-col items-center justify-center",
     { [`timer-progress-${variant}`]: variant },
     className
   );
 
   return (
     <div className={classes} lang="en">
-      <span>
+      <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 tracking-[.25em] font-light text-white text-xl leading-8">
         {children != null ? padWithZero(children?.toString(), 2) : ""}
       </span>
       <svg
@@ -79,6 +79,7 @@ export const TimerProgress: React.FC<TimerProgressProps> = ({
             strokeDashoffset: offset,
             strokeDasharray: circumference,
             strokeWidth: sizes[size] / 10,
+            stroke: "blue", // Set stroke color to blue
           }}
         />
       </svg>

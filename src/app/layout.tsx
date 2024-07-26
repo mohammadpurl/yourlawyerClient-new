@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import AuthProvider from "@/providers/auth-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,13 +22,15 @@ export default function RootLayout({
     <html lang="en" dir="rtl">
       <body
         className={cn(
-          "min-h-screen font-sans antialiased grainy",
+          "min-h-screen font-sans antialiased grainy ",
           inter.className
         )}
       >
-        <Toaster />
-        <Navbar />
-        {children}
+        <AuthProvider>
+          <Toaster />
+          <Navbar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

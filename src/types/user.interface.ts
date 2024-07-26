@@ -1,14 +1,17 @@
 export interface User {
-    token: string;
+  message: string;
+  data: VerifyUser;
+}
+
+export interface VerifyUser {
+  accessToken: string;
 }
 
 export interface UserToken {
-    mobile?: string;
-    picture?: number;
-    exp: number;
-    accessToken: string;
+  mobile?: string;
+  picture?: number;
+  exp: number;
+  accessToken: string;
 }
 
-export interface UserSession extends UserToken {
-
-}
+export interface UserSession extends UserToken {}
