@@ -37,6 +37,8 @@ const SignInForm = () => {
         message: formState.error?.detail!,
         type: "error",
       });
+      console.log(errors);
+      console.log(process.env.NEXT_PUBLIC_API_URL);
     } else if (formState && formState.isSuccess) {
       router.push(`/verify?mobile=${getValues("mobile")}`);
       showNotification({
