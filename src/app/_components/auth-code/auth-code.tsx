@@ -107,7 +107,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
     }));
 
     const classes = classNames(
-      "h-12 p-4 rounded-sm  box-border   border-double border-black flex-1 w-1 text-center",
+      "h-12 p-4 rounded-md  box-border   box-border border-gray-300 border-solid  border-2   flex-1 w-1 text-center",
       {
         [`textbox-${variant}`]: variant,
       }

@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import { authConfig } from "./auth.config";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createData } from "./core/http-service/http-service";
@@ -7,6 +7,7 @@ import { User, UserSession, UserToken } from "./types/user.interface";
 import { API_URL } from "./configs/global";
 import { jwtDecode } from "jwt-decode";
 import { JWT } from "next-auth/jwt";
+import { Problem } from "./types/http-errors.interface";
 
 declare module "next-auth" {
   interface User {
@@ -21,6 +22,14 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     user: UserToken;
+  }
+}
+
+export class AuthroizeError extends CredentialsSignin {
+  problem: Problem;
+  constructor(err: Problem) {
+    super();
+    this.problem = err;
   }
 }
 
@@ -52,7 +61,7 @@ export const {
             accessToken: user?.data?.accessToken,
           };
         } catch (error: unknown) {
-          throw new Error("");
+          throw new AuthroizeError(error as Problem);
         }
       },
     }),
@@ -60,13 +69,21 @@ export const {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.user = jwtDecode<UserToken>(user.accessToken);
-        token.user.accessToken = user.accessToken;
+        try {
+          token.user = jwtDecode<UserToken>(user.accessToken);
+          token.user.accessToken = user.accessToken;
+          console.log("user.accessToken");
+          console.log(user.accessToken);
+        } catch (error) {
+          console.log("error jwtjwtjwtjwt");
+          console.log(error);
+        }
       }
 
       return token;
     },
     async session({ session, token }) {
+      console.log("tokennnnnnnnnnn");
       console.log(token);
       Object.assign(session.user, token.user ?? {});
       return session;

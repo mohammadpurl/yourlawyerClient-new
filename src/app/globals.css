@@ -5,17 +5,19 @@
 /* @import "../tailwind/components.css"; */
 
 @font-face {
-  font-family: 'YekanBakh';
-  src:
-      local('YekanBakhFaNum'),
-      url('/fonts/Yekan Bakh Family/Webfonts/fonts/woff/YekanBakh-Regular.woff')
-          format('woff');
+  font-family: "YekanBakh";
+  src: local("YekanBakhFaNum"),
+    url("/fonts/Yekan Bakh Family/Webfonts/fonts/woff/YekanBakh-Regular.woff")
+      format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 * {
-  font-family: 'YekanBakh';
+  font-family: var(--font-yekanbakh);
+}
+:lang(en) {
+  font-family: var(---font-figtree);
 }
 
 @layer base {
@@ -41,7 +43,7 @@
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -76,7 +78,6 @@
   .input-phone {
     @apply mt-2 h-11 rounded-md px-3 text-sm border;
   }
-  
 }
 
 .grainy {

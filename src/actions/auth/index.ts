@@ -11,7 +11,8 @@ import {
   VerifyUserModel,
 } from "@/app/(auth)/verify/_types/verify-user.type";
 import { Problem } from "@/types/http-errors.interface";
-import { signIn, signOut } from "@/auth";
+import { AuthroizeError, signIn, signOut } from "@/auth";
+import { getSession } from "next-auth/react";
 
 export async function signInAction(
   formState: OperationResult<any> | null,
@@ -62,11 +63,25 @@ export async function verify(
       isSuccess: true,
     } satisfies OperationResult<void>;
   } catch (error) {
-    console.log(error);
-    //    throw new Error('');
+    console.log("error is"+error)
+    if (error instanceof AuthroizeError) {
+      return {
+        isSuccess: false,
+        error: error.problem!,
+      } satisfies OperationResult<void>;
+    }
+    throw new Error("");
   }
 }
+export async function logout(prevState: OperationResult<void> | undefined) {
+  try {
+    await signOut({ redirect: false });
+    console.log("lmplmplmp");
 
-export async function logout() {
-  await signOut();
+    return {
+      isSuccess: true,
+    } satisfies OperationResult<void>;
+  } catch (error) {
+    throw new Error("");
+  }
 }

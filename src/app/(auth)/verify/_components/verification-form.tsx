@@ -56,17 +56,18 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
   const username = params.get("mobile")!;
 
   useEffect(() => {
-    if (verifyState && !verifyState.isSuccess) {
+    if (verifyState && !verifyState.isSuccess && verifyState?.error?.detail) {
       showNotification({
-        message: "",
+        message: verifyState?.error.detail,
         type: "error",
       });
     } else if (verifyState?.isSuccess) {
       const fetchSession = async () => await getSession();
       fetchSession();
+
       router.push("/dashboard");
     }
-  });
+  }, [verifyState, showNotification, router]);
 
   useEffect(() => {
     if (
@@ -125,7 +126,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
             setValue("code", value, { shouldValidate: true });
           }}
         />
-        <Timer
+        {/* <Timer
           ref={timerRef}
           className="mx-auto my-8"
           size="small"
@@ -135,7 +136,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
           expiryTimestamp={getTwoMinutesFromNow()}
           showDays={false}
           showHours={false}
-        />
+        /> */}
         <Button
           isLink={true}
           isDisabled={!showResendCode}
@@ -155,7 +156,9 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
         </Button>
         <div className="flex items-start gap-1 justify-center mt-auto">
           <span>برای اصلاح شماره موبایل</span>
-          <Link href="/signin">اینجا</Link>
+          <Link href="/signin" className="text-blue-500">
+            اینجا
+          </Link>
           <span>کلیک کنید</span>
         </div>
       </form>

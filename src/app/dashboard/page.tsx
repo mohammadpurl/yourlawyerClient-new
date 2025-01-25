@@ -1,7 +1,3 @@
-"use client";
-
-// import { trpc } from '@/app/_trpc/client'
-// import UploadButton from './UploadButton'
 import {
   Ghost,
   Loader2,
@@ -12,15 +8,7 @@ import {
   SquareActivityIcon,
   Square,
 } from "lucide-react";
-import Skeleton from "react-loading-skeleton";
-import Link from "next/link";
-import { format } from "date-fns";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-
-// import  {groups, subGroups}  from "/co"
-// import { getUserSubscriptionPlan } from '@/lib/stripe'
 import {
   Accordion,
   AccordionContent,
@@ -29,36 +17,16 @@ import {
 } from "@/components/ui/accordion";
 import { subGroups, formatTypes } from "../../../public/constants";
 import { RegisterForm } from "@/components/forms/RegisterForm";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-// interface PageProps {
-//   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
-// }
-
-const Dashboard = () => {
-  //   const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
-  //     string | null
-  //   >(null);
-
-  const isLoading = false;
-
-  //   const utils = trpc.useContext()
-
-  //   const { data: files, isLoading } =
-  //     trpc.getUserFiles.useQuery()
-
-  //   const { mutate: deleteFile } =
-  //     trpc.deleteFile.useMutation({
-  //       onSuccess: () => {
-  //         utils.getUserFiles.invalidate()
-  //       },
-  //       onMutate({ id }) {
-  //         setCurrentlyDeletingFile(id)
-  //       },
-  //       onSettled() {
-  //         setCurrentlyDeletingFile(null)
-  //       },
-  //     })
-
+// eslint-disable-next-line @next/next/no-async-client-component
+const Dashboard = async () => {
+  const session = await auth();
+  if (!session || !session.user) {
+    console.log("jjhjh");
+    redirect("/signin");
+  }
   return (
     <main className="flex flex-col mx-auto max-w-10xl md:p-10">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
@@ -73,9 +41,13 @@ const Dashboard = () => {
           {subGroups && subGroups?.length !== 0 ? (
             <Accordion type="multiple">
               {subGroups.map((subGroup, index) => (
-                <AccordionItem value={`item-${index}`} key={subGroup.id}>
+                <AccordionItem
+                  value={`item-${index}`}
+                  key={subGroup.id}
+                  className="p-4"
+                >
                   <AccordionTrigger>
-                    <span className=" flex text-xl text-blue-700 p-2 m-2">
+                    <span className=" flex text-lg text-blue-700 p-2 m-2">
                       {subGroup.name}
                     </span>
                   </AccordionTrigger>
@@ -90,7 +62,7 @@ const Dashboard = () => {
                               >
                                 <div className="flex gap-2">
                                   <Plus />
-                                  <span className=" font-sans font-bold hover:bg-none cursor-pointer">
+                                  <span className=" font-sans font-semibold text-base hover:bg-none cursor-pointer">
                                     {formatType.name}
                                   </span>
                                 </div>

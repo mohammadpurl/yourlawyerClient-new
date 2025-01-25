@@ -47,7 +47,7 @@ const SignInForm = () => {
       });
       console.log(formState.response);
     }
-  }, [formState, showNotification, router, getValues]);
+  }, [formState, showNotification, router, getValues, errors]);
 
   const onSubmit = (data: SignIn) => {
     const formData = new FormData();
@@ -58,18 +58,23 @@ const SignInForm = () => {
   };
 
   return (
-    <>
-      <h5 className="text-2xl">ورود | ثبت نام</h5>
+    <div className="bg-white">
+      <h5 className="text-2xl text-blue-500">ورود | ثبت نام</h5>
       <p className="mt-2">تنظیم کلیه مستندات حقوقی با کمترین زمان و هزینه</p>
       <form
-        className="flex flex-col gap-6 mt-16"
+        className="flex flex-col gap-6 mt-8 p-4"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <label htmlFor="mobile" className="">
+          <span className="text-red-600">* </span>
+          شماره موبایل
+        </label>
         <TextInput<SignIn>
           register={register}
           name={"mobile"}
-          className="h-12 p-4 rounded-sm  box-border  border-solid  border-border border-black"
+          className="h-12 p-4 rounded-md  border-gray-300 border-solid  border-2"
           errors={errors}
+          placeholder="شماره موبایل خود را وارد کنید"
         />
         <Button
           type="submit"
@@ -80,7 +85,7 @@ const SignInForm = () => {
           تایید و دریافت کد
         </Button>
       </form>
-    </>
+    </div>
   );
 };
 

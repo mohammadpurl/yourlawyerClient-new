@@ -4,6 +4,27 @@ export const authConfig = {
   pages: {
     signIn: "/signin",
   },
-  callbacks: {},
+  callbacks: {
+    async authorized({ auth, request }) {
+      const { nextUrl } = request;
+
+      const isAuthenticated = !!auth?.user;
+
+      const authRoutes = ["/signin", "/verify"];
+      const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
+
+      if (isAuthRoutes && isAuthenticated) {
+        return Response.redirect(new URL("/dashboard", nextUrl));
+      }
+
+      const isProtectedRoute = nextUrl.pathname.startsWith("/dashboard");
+
+      if (isProtectedRoute && !isAuthenticated) {
+        return Response.redirect(new URL("/signin", nextUrl));
+      }
+
+      return true;
+    },
+  },
   providers: [],
 } satisfies NextAuthConfig;
