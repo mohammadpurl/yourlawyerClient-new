@@ -8,31 +8,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useRef, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-
 const HeadeUserSession = () => {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const [signoutState, action] = useFormState(logout, undefined);
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const mobile = session?.user?.mobile || undefined;
   useEffect(() => {
     if (signoutState?.isSuccess) {
       const fetchSession = async () => await getSelection();
       fetchSession();
+      location.reload();
       router.push("/");
     }
-  }, [signoutState, router, status]);
+  }, [signoutState, router, status, update, session]);
   const handleClickOutside = (event: any) => {
     if (dropdownRef.current) {
       setDropdownOpen(false);
     }
   };
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
 
   return (
     <>
@@ -53,7 +48,7 @@ const HeadeUserSession = () => {
             // onClick={() => setDropdownOpen(!dropdownOpen)}
             onMouseOver={() => setDropdownOpen(!dropdownOpen)}
           />
-          {session?.user.mobile}
+          {mobile}
           {dropdownOpen && (
             <div
               className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50"
@@ -71,7 +66,7 @@ const HeadeUserSession = () => {
   );
 };
 const LogoutButton = () => {
-  const { pending } = useFormStatus();
+  const { pending, data } = useFormStatus();
   return (
     <button className="">
       {pending && <Loading size="tiny" />}

@@ -10,10 +10,16 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import UserAccountNav from "./UserAccountNav";
 import MobileNav from "./MobileNav";
 import HeadeUserSession from "./Heade-user-session";
+// import ParentComponent from "./Parent-Heade-session"
+import { auth } from "@/auth";
 
 const Navbar = async () => {
   const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user1 = await getUser();
+
+  const session = await auth();
+
+  const user = session?.user;
 
   return (
     <nav className="sticky h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all">
@@ -26,56 +32,8 @@ const Navbar = async () => {
           {/* <MobileNav isAuth={!!user} /> */}
 
           <div className="hidden items-center space-x-4 sm:flex">
-            {!user ? (
-              <>
-                {/* <Link
-                  href="/pricing"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
-                >
-                  Pricing
-                </Link> */}
-                {/* <Link
-                  href="/signin"
-                  className="bg-inherit text-black  hover:bg-accent/90"
-                >
-                  ورود
-                </Link> */}
-                <HeadeUserSession />
-                {/* <Button
-                  className={buttonVariants({
-                    size: "sm",
-                  })}
-                >
-                  {" "}
-                  شروع کنید <ArrowLeft className="ml-1.5 h-5 w-5" />
-                </Button> */}
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/dashboard"
-                  className={buttonVariants({
-                    variant: "ghost",
-                    size: "sm",
-                  })}
-                >
-                  Dashboard
-                </Link>
-
-                <UserAccountNav
-                  name={
-                    !user.given_name || !user.family_name
-                      ? "Your Account"
-                      : `${user.given_name} ${user.family_name}`
-                  }
-                  email={user.email ?? ""}
-                  imageUrl={user.picture ?? ""}
-                />
-              </>
-            )}
+            <HeadeUserSession />
+            {user?.mobile}
           </div>
         </div>
       </MaxWidthWrapper>

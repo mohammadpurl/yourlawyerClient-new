@@ -10,7 +10,7 @@ export const authConfig = {
 
       const isAuthenticated = !!auth?.user;
 
-      const authRoutes = ["/signin", "/verify"];
+      const authRoutes = ["/auth/check-otp", "/auth/get-otp"];
       const isAuthRoutes = authRoutes.includes(nextUrl.pathname);
 
       if (isAuthRoutes && isAuthenticated) {

@@ -64,7 +64,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
     } else if (verifyState?.isSuccess) {
       const fetchSession = async () => await getSession();
       fetchSession();
-
+      location.reload();
       router.push("/dashboard");
     }
   }, [verifyState, showNotification, router]);

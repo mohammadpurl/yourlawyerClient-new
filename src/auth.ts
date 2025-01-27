@@ -58,7 +58,7 @@ export const {
           );
           // Auth.js expects the user object to be returned
           return {
-            accessToken: user?.data?.accessToken,
+            accessToken: user.access_token,
           };
         } catch (error: unknown) {
           throw new AuthroizeError(error as Problem);
@@ -69,22 +69,13 @@ export const {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        try {
-          token.user = jwtDecode<UserToken>(user.accessToken);
-          token.user.accessToken = user.accessToken;
-          console.log("user.accessToken");
-          console.log(user.accessToken);
-        } catch (error) {
-          console.log("error jwtjwtjwtjwt");
-          console.log(error);
-        }
+        token.user = jwtDecode<UserToken>(user.accessToken);
+        token.user.accessToken = user.accessToken;
       }
 
       return token;
     },
     async session({ session, token }) {
-      console.log("tokennnnnnnnnnn");
-      console.log(token);
       Object.assign(session.user, token.user ?? {});
       return session;
     },

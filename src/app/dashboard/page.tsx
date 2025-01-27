@@ -17,16 +17,9 @@ import {
 } from "@/components/ui/accordion";
 import { subGroups, formatTypes } from "../../../public/constants";
 import { RegisterForm } from "@/components/forms/RegisterForm";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Dashboard = async () => {
-  const session = await auth();
-  if (!session || !session.user) {
-    console.log("jjhjh");
-    redirect("/signin");
-  }
   return (
     <main className="flex flex-col mx-auto max-w-10xl md:p-10">
       <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">

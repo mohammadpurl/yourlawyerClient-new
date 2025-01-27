@@ -127,6 +127,7 @@ const AuthCode = forwardRef<AuthCodeRef, AuthCodeProps>(
           ref={(element: HTMLInputElement) => {
             inputsRef.current[i] = element;
           }}
+          key={`auth-input-${i}`}
         />
       );
     }

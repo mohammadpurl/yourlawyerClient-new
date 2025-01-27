@@ -12,10 +12,9 @@ import {
 } from "@/app/(auth)/verify/_types/verify-user.type";
 import { Problem } from "@/types/http-errors.interface";
 import { AuthroizeError, signIn, signOut } from "@/auth";
-import { getSession } from "next-auth/react";
 
 export async function signInAction(
-  formState: OperationResult<any> | null,
+  formState: OperationResult<string> | null,
   formData: FormData
 ) {
   const mobile = formData.get("mobile") as string;
@@ -43,7 +42,7 @@ export async function sendAuthCode(
 ) {
   return serverActionWrapper(
     async () =>
-      await createData<SendAuthCode, string>("/auth/get-otp", {
+      await createData<SendAuthCode, string>("/send-auth-code", {
         mobile,
       })
   );
@@ -63,21 +62,22 @@ export async function verify(
       isSuccess: true,
     } satisfies OperationResult<void>;
   } catch (error) {
-    console.log("error is"+error)
     if (error instanceof AuthroizeError) {
       return {
         isSuccess: false,
         error: error.problem!,
       } satisfies OperationResult<void>;
+    } else {
+      console.log("jwtjwtjwt error is");
+      console.log(error as string);
     }
     throw new Error("");
   }
 }
+
 export async function logout(prevState: OperationResult<void> | undefined) {
   try {
     await signOut({ redirect: false });
-    console.log("lmplmplmp");
-
     return {
       isSuccess: true,
     } satisfies OperationResult<void>;
