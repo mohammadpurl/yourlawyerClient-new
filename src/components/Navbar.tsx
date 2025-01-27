@@ -33,7 +33,6 @@ const Navbar = async () => {
 
           <div className="hidden items-center space-x-4 sm:flex">
             <HeadeUserSession />
-            {user?.mobile}
           </div>
         </div>
       </MaxWidthWrapper>

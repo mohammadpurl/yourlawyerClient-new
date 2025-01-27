@@ -68,6 +68,8 @@ export const {
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log("jwt");
+      console.log(user);
       if (user) {
         token.user = jwtDecode<UserToken>(user.accessToken);
         token.user.accessToken = user.accessToken;
