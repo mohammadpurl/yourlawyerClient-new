@@ -2,7 +2,7 @@
 
 import { logout } from "@/actions/auth";
 import { Loading } from "@/app/_components/loading";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ const HeadeUserSession = () => {
   }, []);
   useEffect(() => {
     if (signoutState?.isSuccess) {
-      const fetchSession = async () => await getSelection();
+      const fetchSession = async () => await getSession();
       fetchSession();
       toggleDropdown();
       location.reload();

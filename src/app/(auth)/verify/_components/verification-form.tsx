@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { VerifyUserModel } from "../_types/verify-user.type";
 import { useFormState } from "react-dom";
 import { sendAuthCode, verify } from "@/actions/auth";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
@@ -54,6 +54,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
 
   const params = useSearchParams();
   const username = params.get("mobile")!;
+  const { data: session, status, update } = useSession();
 
   useEffect(() => {
     if (verifyState && !verifyState.isSuccess && verifyState?.error?.detail) {
@@ -62,12 +63,24 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
         type: "error",
       });
     } else if (verifyState?.isSuccess) {
-      const fetchSession = async () => await getSession();
-      fetchSession();
-      location.reload();
-      router.push("/dashboard");
+      // 1. ذخیره وضعیت لاگین موفق در sessionStorage
+      sessionStorage.setItem('auth_success', 'true');
+      
+      // 2. بروزرسانی جلسه
+      const fetchSession = async () => {
+        const session = await getSession();
+        return session;
+      };
+      
+      fetchSession().then((session) => {
+        // 3. بروزرسانی سشن فعلی
+        update().then(() => {
+          // 4. ریدایرکت به داشبورد با ارسال پارامتر auth برای اطمینان از بروزرسانی
+          window.location.href = "/dashboard" ;
+        });
+      });
     }
-  }, [verifyState, showNotification, router]);
+  }, [verifyState, showNotification, update]);
 
   useEffect(() => {
     if (
@@ -91,7 +104,7 @@ const VerificationForm = ({ mobile }: { mobile: string }) => {
   const onSubmit = (data: VerifyUserModel) => {
     data.mobile = username;
 
-    startTransition(async () => {
+    startTransition(() => {
       verifyAction({
         mobile: data.mobile,
         code: data.code,

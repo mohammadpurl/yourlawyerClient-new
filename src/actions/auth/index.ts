@@ -60,6 +60,7 @@ export async function verify(
     });
     return {
       isSuccess: true,
+     
     } satisfies OperationResult<void>;
   } catch (error) {
     if (error instanceof AuthroizeError) {
